@@ -1,6 +1,7 @@
 #! /bin/bash
 git config --global core.editor "vim"
-git config --global --edit
+git config --global user.name "infectiouscontent"
+git config --global user.email infectiouscontent@icloud.com
 git commit --amend --reset-author
 sudo apt -y update
 sudo apt -y upgrade
