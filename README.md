@@ -4,7 +4,7 @@ Use Typescript to interface with the OpenAI API.
 
 ## Quick Start
 
-Launch an Ubuntu Linux on a AWS 64-bit CISC EC2 Instance (t2.micro for example). Login via ssh and run the following commands:
+Tilt up Ubuntu Linux on an AWS 64-bit CISC EC2 Instance (t2.micro for example). Login via ssh and run the following commands:
 
 ```
 ssh-keygen
