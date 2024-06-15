@@ -4,9 +4,15 @@ Use Typescript to interface with the OpenAI API.
 
 ## Quick Start
 
-Launch an Ubuntu Linux on a AWS 64-bit RISC EC2 Instance (t4g.nano for example). Login via ssh and run the following command:
+Launch an Ubuntu Linux on a AWS 64-bit CISC EC2 Instance (t2.micro for example). Login via ssh and run the following command:
 
-```bash scripts/setup.bash```
+```
+ssh-keygen
+cat /home/ubuntu/.ssh/id_ed25519.pub
+git clone git@github.com:infectiouscontentengineering/typescript-openai-api-testing.git
+cd typescript-openai-api-testing/
+bash scripts/setup.bash
+```
 
 When the vi dialog opens, enter the OPENAI_API_KEY. For example:
 
