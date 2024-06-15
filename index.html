@@ -68,38 +68,9 @@
     <div class="container">
         <h1>OpenAI API Interaction</h1>
         <textarea id="user-input" placeholder="Type your input here..."></textarea>
-        <button onclick="sendInput()">Send</button>
-        <div class="output" id="output"></div>
+        <button id="submission-button" onclick="sendInput()">Send</button>
+        <div class="output" id="response"></div>
     </div>
-    <script>
-        async function sendInput() {
-            const input = document.getElementById('user-input').value;
-            try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json', 
-                        'Authorization': 'Bearer $OPENAI_API_KEY' 
-                    },
-                    body: JSON.stringify({ 
-                        model: "gpt-3.5-turbo", 
-                        messages: [{ role: "user", content: input }] 
-                    })
-                });
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Error: ${response.status} - ${errorText}`);
-                }
-                const data = await response.json();
-                if (data.choices && data.choices.length > 0 && data.choices[0].message) {
-                    document.getElementById('output').innerText = data.choices[0].message.content.trim();
-                } else {
-                    throw new Error('Unexpected response structure');
-                }
-            } catch (error) {
-                document.getElementById('output').innerText = error;
-            }
-        }
-    </script>
+    <script src="dist/index.js"></script>
 </body>
 </html>

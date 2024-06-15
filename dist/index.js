@@ -8,23 +8,57 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const form = document.getElementById('inputForm');
-const userInput = document.getElementById('userInput');
-const responseOutput = document.getElementById('responseOutput');
-form.addEventListener('submit', (event) => __awaiter(void 0, void 0, void 0, function* () {
-    event.preventDefault();
-    const inputText = userInput.value;
-    const response = yield fetch('https://api.openai.com/v1/engines/davinci/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer $OPENAI_API_KEY`
-        },
-        body: JSON.stringify({
-            prompt: inputText,
-            max_tokens: 150
-        })
+const button = document.getElementById('submission-button');
+const userInput = document.getElementById('user-input');
+const responseOutput = document.getElementById('response');
+function sendInput() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!userInput || !responseOutput) {
+            console.error('Required DOM elements are missing.');
+            return;
+        }
+        const inputText = userInput.value.trim();
+        if (!inputText) {
+            responseOutput.textContent = 'Input cannot be empty.';
+            return;
+        }
+        try {
+            const response = yield fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer $OPENAI_API_KEY'
+                },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: inputText }]
+                })
+            });
+            if (!response.ok) {
+                const errorText = yield response.text();
+                throw new Error(`Error: ${response.status} - ${errorText}`);
+            }
+            const data = yield response.json();
+            if (data.choices && data.choices.length > 0 && data.choices[0].message) {
+                responseOutput.textContent = data.choices[0].message.content.trim();
+            }
+            else {
+                throw new Error('Unexpected response structure');
+            }
+        }
+        catch (error) {
+            if (error instanceof Error) {
+                responseOutput.textContent = `Error: ${error.message}`;
+            }
+            else {
+                responseOutput.textContent = 'An unknown error occurred';
+            }
+        }
     });
-    const data = yield response.json();
-    responseOutput.textContent = data.choices[0].text.trim();
-}));
+}
+if (button) {
+    button.addEventListener('click', sendInput);
+}
+else {
+    console.error('Button element not found.');
+}
