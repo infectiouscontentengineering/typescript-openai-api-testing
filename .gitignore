@@ -1,1 +1,4 @@
 node_modules/
+authentication/
+*swp
+*DS_Store
