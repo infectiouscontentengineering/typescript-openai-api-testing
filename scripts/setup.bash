@@ -11,5 +11,6 @@ npm install --save-dev @types/node
 sudo npm install -g http-server
 mkdir authentication
 vi authentication/openai
+while IFS='=' read -r key value; do export "$key"="$value"; done < "authentication/openai"
 npx tsc
 http-server
