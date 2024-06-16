@@ -12,5 +12,5 @@ sudo npm install -g http-server
 mkdir authentication
 vi authentication/openai
 while IFS='=' read -r key value; do export "$key"="$value"; done < "authentication/openai"
-npx tsc
-http-server
+npm install
+VITE_OPENAI_API_KEY=$OPENAI_API_KEY npm run dev
